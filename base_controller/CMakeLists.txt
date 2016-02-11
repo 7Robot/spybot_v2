@@ -7,10 +7,10 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 
-find_library(PIGPIO_LIBRARY pigpio /usr/local/lib)
+find_library(PIGPIOD_IF2_LIBRARY pigpiod_if2 /usr/local/lib)
 
 catkin_package(
-	DEPENDS pigpio
+	DEPENDS pigpiod_if2
 )
 
 ###########
@@ -28,5 +28,5 @@ add_executable(controller src/controller.cpp)
 
 target_link_libraries(controller
 	${catkin_LIBRARIES}
-	${PIGPIO_LIBRARY}
+	${PIGPIOD_IF2_LIBRARY}
 )

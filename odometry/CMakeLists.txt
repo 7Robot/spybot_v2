@@ -8,10 +8,10 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 
-find_library(pigpio_LIBRARIES pigpio /usr/local/lib)
+find_library(PIGPIOD_IF2_LIBRARY pigpiod_if2 /usr/local/lib)
 
 catkin_package(
-	DEPENDS pigpio
+	DEPENDS pigpiod_if2
 )
 
 ###########
@@ -33,7 +33,7 @@ include_directories(
 
 add_executable(odometry src/odometry.cpp src/rotary_encoder.cpp)
 
-target_link_libraries(odometry 
-	${catkin_LIBRARIES} 
-	${pigpio_LIBRARIES}
+target_link_libraries(odometry
+	${catkin_LIBRARIES}
+	${PIGPIOD_IF2_LIBRARY}
 )

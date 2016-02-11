@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 
 #include "rotary_encoder.hpp"
 
@@ -39,7 +39,7 @@ void re_decoder::_pulse(int gpio, int level, uint32_t tick)
    }
 }
 
-void re_decoder::_pulseEx(int gpio, int level, uint32_t tick, void *user)
+void re_decoder::_pulseEx(int PI, unsigned int gpio, unsigned int level, uint32_t tick, void *user)
 {
    /*
       Need a static callback to link with C.
@@ -50,8 +50,9 @@ void re_decoder::_pulseEx(int gpio, int level, uint32_t tick, void *user)
    mySelf->_pulse(gpio, level, tick); /* Call the instance callback. */
 }
 
-re_decoder::re_decoder(int gpioA, int gpioB, re_decoderCB_t callback)
+re_decoder::re_decoder(int PI, int gpioA, int gpioB, re_decoderCB_t callback)
 {
+   m_PI = PI;
    mygpioA = gpioA;
    mygpioB = gpioB;
 
@@ -62,23 +63,22 @@ re_decoder::re_decoder(int gpioA, int gpioB, re_decoderCB_t callback)
 
    lastGpio = -1;
 
-   gpioSetMode(gpioA, PI_INPUT);
-   gpioSetMode(gpioB, PI_INPUT);
+   set_mode(m_PI, gpioA, PI_INPUT);
+   set_mode(m_PI, gpioB, PI_INPUT);
 
    /* pull up is needed as encoder common is grounded */
 
-   gpioSetPullUpDown(gpioA, PI_PUD_UP);
-   gpioSetPullUpDown(gpioB, PI_PUD_UP);
+   set_pull_up_down(PI, gpioA, PI_PUD_UP);
+   set_pull_up_down(PI, gpioB, PI_PUD_UP);
 
    /* monitor encoder level changes */
 
-   gpioSetAlertFuncEx(gpioA, _pulseEx, this);
-   gpioSetAlertFuncEx(gpioB, _pulseEx, this);
+   m_id_A = callback_ex(PI, gpioA, EITHER_EDGE, _pulseEx, this);
+   m_id_B = callback_ex(PI, gpioB, EITHER_EDGE, _pulseEx, this);
 }
 
 void re_decoder::re_cancel(void)
 {
-   gpioSetAlertFuncEx(mygpioA, 0, this);
-   gpioSetAlertFuncEx(mygpioB, 0, this);
+   callback_cancel(m_id_A);
+   callback_cancel(m_id_B);
 }
-

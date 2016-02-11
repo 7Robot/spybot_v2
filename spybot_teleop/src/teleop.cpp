@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("cmd_vel", 1);
 
-  ros::Rate r(10);
+  ros::Rate r(100);
 
 	//Background task
 	while(ros::ok())
@@ -67,19 +67,19 @@ int main(int argc, char* argv[])
 				{
 					//UP A
 					case 'A':
-						linear_speed = 150;
+						linear_speed = 1;
 						break;
 					//DOWN B
 					case 'B':
-            linear_speed = -150;
+            linear_speed = -1;
 						break;
 					//RIGHT C
 					case 'C':
-            angular_speed = -0.87;
+            angular_speed = 1;
 						break;
 					//LEFT D
 					case 'D':
-            angular_speed = 0.87;
+            angular_speed = -1;
 						break;
 				}
 			}
