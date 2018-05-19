@@ -53,14 +53,14 @@ void set_speed_right(int speed)
 
 void cmd_callback(const geometry_msgs::Twist::ConstPtr& cmd_vel)
 {
-		speed_target_r = cmd_vel->linear.x + DIST_ENTRAXE * tan(cmd_vel->angular.z);
-		speed_target_l = cmd_vel->linear.x - DIST_ENTRAXE * tan(cmd_vel->angular.z);
+		speed_target_r = cmd_vel->linear.x + 200 * DIST_ENTRAXE * tan(cmd_vel->angular.z);
+		speed_target_l = cmd_vel->linear.x - 200 * DIST_ENTRAXE * tan(cmd_vel->angular.z);
 }
 
 void reg_callback(const ros::TimerEvent& trash)
 {
 	set_speed_left((int)speed_target_l);
-	set_speed_right((int)speed_target_l);
+	set_speed_right((int)speed_target_r);
 }
 
 int main(int argc, char** argv)
