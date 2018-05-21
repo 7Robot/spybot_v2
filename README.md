@@ -2,13 +2,15 @@
 
 Le spybot de 7robot. TVN7 gare à toi!!
 
-#TODO
+Uitlise ROS control sur ton smartphone!
+
+# TODO
 Changer les pins de contrôle du hacheur moteur droit
 Régler la cam
 Faire un asserv
 Mettre les gpio en paramètres des nodes
 Clean la méca
 
-#Contributeur
+# Contributeur
 Thibaut Boissin
 Thomas Chamelot
