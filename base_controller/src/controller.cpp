@@ -12,7 +12,7 @@
 #define PIN_IN_3 27
 #define PIN_IN_4 22
 
-#define DIST_ENTRAXE 0.25
+#define DIST_ENTRAXE 0.3
 
 using namespace std;
 

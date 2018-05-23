@@ -6,10 +6,10 @@
   </node>
 
   <node pkg="usb_cam" type="usb_cam_node" name="camera" output="screen">
-    <param name="image_width" type="int" value="320" />
-    <param name="image_height" type="int" value="240" />
-    <param name="framerate" type="int" value="3" />
-    <param name="pixel_format" type="string" value="yuyv" />
+    <param name="image_width" type="int" value="352" />
+    <param name="image_height" type="int" value="288" />
+    <param name="framerate" type="int" value="15" />
+    <param name="pixel_format" type="string" value="mjpeg" />
   </node>
 
 </launch>
