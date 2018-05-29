@@ -77,6 +77,8 @@ int main(int argc, char** argv)
 	set_mode(PI, PIN_IN_2, PI_OUTPUT);
 	set_mode(PI, PIN_IN_3, PI_OUTPUT);
 	set_mode(PI, PIN_IN_4, PI_OUTPUT);
+	set_PWM_frequency(PI, PIN_EN_A, 100000);
+	set_PWM_frequency(PI, PIN_EN_B, 100000);
 
 	ros::Subscriber sub = n.subscribe("cmd_vel", 1000, cmd_callback);
 	ros::Timer timer = n.createTimer(ros::Duration(0.01), reg_callback);
