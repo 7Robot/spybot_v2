@@ -10,7 +10,7 @@
 #define PI 3.1415
 #define STEP_TO_M PI/1024*0.058
 //TODO verifier la dist entraxe
-#define DIST_ENTRAXE 0.3
+#define DIST_ENTRAXE 0.29
 #define FREQ 10
 
 // Rotary encoder on 10 bits [0; 1023]

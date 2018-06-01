@@ -4,6 +4,7 @@ project(odometry)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   nav_msgs
+  geometry_msgs
   tf
 )
 
@@ -32,8 +33,12 @@ include_directories(
 
 
 add_executable(odometry src/odometry.cpp src/rotary_encoder.cpp)
+add_executable(odom_debug src/odom_debug.cpp)
 
 target_link_libraries(odometry
 	${catkin_LIBRARIES}
 	${PIGPIOD_IF2_LIBRARY}
+)
+target_link_libraries(odom_debug
+	${catkin_LIBRARIES}
 )
