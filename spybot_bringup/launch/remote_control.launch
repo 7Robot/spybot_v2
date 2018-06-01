@@ -1,0 +1,8 @@
+<launch>
+   <node name="image_view" pkg="image_view" type="image_view">
+       <param name="image" value="/camera/image_raw/compressed"/>
+       <param name="_image_transport" value="compressed"/>
+   </node>
+
+   <node name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" />
+</launch>
