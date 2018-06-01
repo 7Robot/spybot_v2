@@ -39,12 +39,21 @@ sur un pc distant:
 
 gmapping ne fonctionne pas encore correctement! il semble qu'il y ait un probleme entre le tf du lidar et celui de la base roulante. J'avais essayé de corriger ca en modifiant les fichiers de description urdf dans le dossier sick\_tim/urdf
 
+archi du robot:
+===============
+
+- base roulante differentielle, avec encodeurs séparés.
+- controle des moteurs via un hacheur [doc ici](http://www.bde.enseeiht.fr/clubs/robot/node/26)
+- carte de puissance trouvée quelque part au fond du club, photo a venir. bref ca sort du 10v et du 5v.
+- une webcam usb d'un autre temps
+- un lidar tim561 [ref ici](https://www.sick.com/ag/en/detection-and-ranging-solutions/2d-lidar-sensors/tim5xx/tim561-2050101/p/p369446)
+
 TODO
 ====
 
--Faire un asserv
--Mettre les gpio en paramètres des nodes
--Setup la navigation stack (cad ajout un path planner et un path follower)
+- Faire un asserv
+- Mettre les gpio en paramètres des nodes
+- Setup la navigation stack (cad ajout un path planner et un path follower)
 
 Faire une interface web
 
