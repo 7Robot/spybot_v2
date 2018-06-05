@@ -1,4 +1,6 @@
 <launch>
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
   <node pkg="base_controller" type="controller" name="controller" output="screen">
   </node>
 
