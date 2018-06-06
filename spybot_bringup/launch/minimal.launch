@@ -1,6 +1,10 @@
 <launch>
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
 
+  <node pkg="web_video_server" type="web_video_server" name="video_server">
+    <param name="address" type="string" value="192.168.1.158" />
+  </node>
+
   <node pkg="base_controller" type="controller" name="controller" output="screen">
   </node>
 

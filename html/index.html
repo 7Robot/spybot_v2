@@ -4,8 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 	<script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+	<script type="text/javascript" src="http://static.robotwebtools.org/mjpegcanvasjs/current/mjpegcanvas.min.js"></script>
 
 	<style>
 		body {
@@ -40,34 +42,16 @@
 	</style>
 </head>
 
-<body>
-	<div id="container"></div>
-	<div id="info">
+<body onload="init()">
+	<div id="container">
 		<center>
-			<table border=1>
-				<tr>
-					<td>
-						<center>
-							<h3>MockBot Virtual Teleop Frontview</h3>
-							<span id="result"></span>
-							<br>
-							<script type="text/javascript">
-								var ip = location.host;
-								document.write("<img src=http://" + ip + ":8080/stream?topic=/camera/rgb/image_raw&width=256&height=128");
-								//document.write("<img src=http://" + ip + ":8080/stream?topic=/camera/rgb/image_raw&width=256&height=128");
-								//document.write("<img src=http://" + ip + ":8080/stream?topic=/camera/ir/image_raw&width=256&height=128");
-							</script>
-							<br>
-							<br>
-							<br> Touch the screen or use the mouse to move
-							<br>
-							<br>
-						</center>
-					</td>
-				</tr>
-			</table>
+			<h3>Spybot Virtual Teleop Frontview</h3>
+			<div id="mjpeg">
+			</div>
+			<br> Touch the screen or use the mouse to move
 		</center>
 	</div>
+
 
 	<script src="./virtualjoystick.js"></script>
 	<script type="text/javascript">
@@ -106,7 +90,26 @@
 			}
 		});
 		cmdVel.publish(twist);
+
+
+  	listener.subscribe(function(message) {
+    	console.log('Received message on ' + listener.name + ': ' + message.data);
+    	listener.unsubscribe();
+  	});
+
+		function init() {
+	    // Create the main viewer.
+	    var viewer = new MJPEGCANVAS.Viewer({
+	      divID : 'mjpeg',
+	      host : '192.168.1.158',
+	      width : 352,
+	      height : 288,
+	      topic : '/camera/image_raw'
+	    });
+		}
+
 		console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+
 		var joystick = new VirtualJoystick({
 			container: document.getElementById('container'),
 			mouseSupport: true,
@@ -117,12 +120,14 @@
 			stickRadius: window.innerWidth / 4,
 			strokeStyle: 'red'
 		});
+
 		joystick.addEventListener('touchStart', function() {})
 		joystick.addEventListener('touchEnd', function() {})
+
 		setInterval(function() {
 			var outputEl = document.getElementById('result');
 			var scale = 100;
-			var maxspeed = 2.0;
+			var maxspeed = 1.0;
 			var X = Math.round(joystick.deltaY());
 			var Z = Math.round(joystick.deltaX());
 			// Convert to ROS coordinates
@@ -153,10 +158,8 @@
 					"z": AngularZ
 				}
 			});
-			console.log('X:' + twist.linear.x + ' Z:' + twist.angular.z);
+			//console.log('X:' + twist.linear.x + ' Z:' + twist.angular.z);
 			cmdVel.publish(twist);
-			outputEl.innerHTML = '<b></b> ' + ' dx:' + Math.round(joystick.deltaX()) + ' dy:' + Math.round(joystick.deltaY()) + (joystick.right() ? ' right' : '') + (joystick.up() ? ' up' : '') + (joystick.left() ? ' left' : '') + (joystick.down() ?
-				' down' : '') + ' <=> lx:' + LinearX + ' az:' + AngularZ
 		}, 1 / 30 * 1000);
 	</script>
 </body>
